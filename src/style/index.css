@@ -1,0 +1,19 @@
+.van-nav-bar {
+  background-color: #3196fa;
+}
+.van-nav-bar .van-nav_title {
+  color: #fff;
+}
+.home {
+  padding-top: 50px;
+  margin-bottom: 50px;
+}
+.home .van-tabs_wrap {
+  position: fixed;
+  top: 50px;
+  left: 0;
+  z-index: 10;
+}
+.home .van-tabs--line {
+  padding-top: 50px;
+}
