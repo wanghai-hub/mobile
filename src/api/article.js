@@ -8,3 +8,14 @@ export const getarticle = (data) => {
     params: data
   })
 }
+
+// 不感兴趣的请求
+export const dislike = (id) => {
+  return request({
+    method: 'post',
+    url: '/app/v1_0/article/dislikes',
+    data: {
+      target: id
+    }
+  })
+}

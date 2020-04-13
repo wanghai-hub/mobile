@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 
 // 引入Vant所有的组件
-import Vant from 'vant'
+import Vant ,{ Lazyload } from 'vant'
 // 用它的样式
 import 'vant/lib/index.css'
 
@@ -20,6 +20,7 @@ Vue.filter('relTime', relTime)
 
 // 用一下组件
 Vue.use(Vant)
+Vue.use(Lazyload)
 
 Vue.config.productionTip = false
 

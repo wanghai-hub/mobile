@@ -5,11 +5,11 @@
           :finished="finished" finished-text="没有更多了"
           @load="onLoad">
            <van-cell v-for="(item,index) in list" :key="index" :title="item.title">
-             <div slot="lable">
+             <div slot="label">
                <!-- 图片 -->
                <van-grid :column-num="item.cover.images.length">
                   <van-grid-item v-for="(img,inx) in item.cover.images" :key="inx">
-                    <van-image :src="img"/>
+                    <van-image lazy-load :src="img"/>
                   </van-grid-item>
                 </van-grid>
                <!-- 文字 -->
@@ -17,6 +17,9 @@
                  <span>{{item.aut_name}}</span>
                  <span>{{item.comm_count}}</span>
                  <span>{{item.pupdate | relTime}}</span>
+                 <span class="btn" v-if="$store.state.user" @click="showmore(item.art_id)">
+                   <van-icon name="cross"></van-icon>
+                 </span>
                </div>
              </div>
            </van-cell>
@@ -46,6 +49,9 @@ export default {
     }
   },
   methods: {
+    showmore(bigint) {
+      this.$emit('showmoreout',bigint.tostring())
+    },
     // 下拉添加新数据
     async onRefresh () {
        const result = await getarticle({
@@ -94,8 +100,12 @@ export default {
 
 <style scoped lang='less'>
 .mata {
+  display: flex;
   span {
     margin-right: 10px;
   }
+}
+.btn {
+  margin-left: auto;
 }
 </style>
