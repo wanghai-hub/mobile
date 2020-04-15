@@ -22,6 +22,9 @@ Vue.filter('relTime', relTime)
 Vue.use(Vant)
 Vue.use(Lazyload)
 
+// 挂载事件总线
+Vue.prototype.$eventbus = new Vue()
+
 Vue.config.productionTip = false
 
 new Vue({

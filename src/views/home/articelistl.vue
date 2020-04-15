@@ -48,7 +48,21 @@ export default {
       required: true
     }
   },
+  created() {
+    // 监听事件总线上帝的unintrest事件
+    this.$eventbus.$on('deleteart',(obj) =>{
+      // 判断是否是当前频道下操作
+      if(obj.channelId === this.channels.id) {
+        // 从数组中删除
+        const inx = this.list.findIndex(item => item.art_id.tostring() === obj.articleId)
+        if(inx !== -1) {
+           this.list.splice(inx,1)
+        }
+      }
+    })
+  },
   methods: {
+    // 显示弹出层
     showmore(bigint) {
       this.$emit('showmoreout',bigint.tostring())
     },

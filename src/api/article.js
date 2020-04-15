@@ -19,3 +19,15 @@ export const dislike = (id) => {
     }
   })
 }
+
+// 举报
+export const reportart = (artId,type) => {
+  return request ({
+    method: 'post',
+    url: '/app/v1_0/article/reports',
+    data: {
+      target: artId,
+      type: type
+    }
+  })
+}

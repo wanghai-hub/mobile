@@ -8,3 +8,9 @@ export const getchannel = () => {
         url: '/app/v1_0/user/channels',
     })
 }
+
+export const getAllChannels = () => {
+    return request ({
+        url: '/app/v1_0/channels'
+    })
+}
