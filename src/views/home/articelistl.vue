@@ -1,10 +1,11 @@
 <template>
-  <div class='articlelist'>
+  <div class='articlelist scroll-wrapper' @scroll="remember" ref="scroll">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading"
           :finished="finished" finished-text="没有更多了"
           @load="onLoad">
-           <van-cell v-for="(item,index) in list" :key="index" :title="item.title">
+           <van-cell v-for="(item,index) in list" :key="index" :title="item.title"
+           @click="$router.push('/article/'+item.art_id)">
              <div slot="label">
                <!-- 图片 -->
                <van-grid :column-num="item.cover.images.length">
@@ -17,6 +18,7 @@
                  <span>{{item.aut_name}}</span>
                  <span>{{item.comm_count}}</span>
                  <span>{{item.pupdate | relTime}}</span>
+                 <!-- 登陆用户显示关闭按钮 -->
                  <span class="btn" v-if="$store.state.user" @click="showmore(item.art_id)">
                    <van-icon name="cross"></van-icon>
                  </span>
@@ -54,17 +56,27 @@ export default {
       // 判断是否是当前频道下操作
       if(obj.channelId === this.channels.id) {
         // 从数组中删除
-        const inx = this.list.findIndex(item => item.art_id.tostring() === obj.articleId)
+        const inx = this.list.findIndex(item => item.art_id.toString() === obj.articleId)
         if(inx !== -1) {
            this.list.splice(inx,1)
         }
       }
     })
   },
+  actived () {
+    if(this.scrollTop && this.$refs.scroll)
+    this.$refs.scroll.scrollTop = this.scrollTop
+  },
   methods: {
-    // 显示弹出层
+    // 记录当前的滚动条位置
+    remember (e) {
+      // 需要添加节流操作
+      this.scrollTop = e.target.scrollTop
+    },
+    // 显示x弹出层
     showmore(bigint) {
-      this.$emit('showmoreout',bigint.tostring())
+      // bigint就是当前点击文章的编号id 
+      this.$emit('showmoreout',bigint.toString()) 
     },
     // 下拉添加新数据
     async onRefresh () {

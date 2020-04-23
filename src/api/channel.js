@@ -14,3 +14,24 @@ export const getAllChannels = () => {
         url: '/app/v1_0/channels'
     })
 }
+
+export const addChannel = (channels) =>{
+    return request ({
+        method: 'put',
+        url: '/app/v1_0/user/channels',
+        data: {
+            channels
+        }
+    })
+}
+
+export const deleteChannels = (channels) => {
+    // 默认请求类型就是get
+    return request({
+      url: '/app/v1_0/user/channels',
+      method: 'DELETE',
+      data: {
+        channels
+      }
+    })
+  }

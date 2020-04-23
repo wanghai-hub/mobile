@@ -1,7 +1,7 @@
 <template>
   <div class='layout'>
     <!-- 头 -->
-    <van-nav-bar title="头条" fixed
+    <van-nav-bar title="黑马头条" fixed v-show="!$route.path.startsWith('/user')"
     right-text="搜索" @click-right="search"/>
 
     <router-view></router-view>
@@ -24,7 +24,9 @@ export default {
     }
   },
   methods: {
-    search() {}
+    search() {
+      this.$router.push('/search')
+    }
   }
 }
 </script>

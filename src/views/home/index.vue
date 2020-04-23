@@ -9,21 +9,26 @@
 
       <!-- 点击x弹出层 -->
       <van-popup :style="{width:'80%'}" v-model="showmoreaction">
-        <!-- 监听dislike 和 report -->
-        <more-action @dislike="dislike" 
+        <!-- 引入moreaction组件  监听dislike 和 report -->
+        <more-action @dislike="hDislike" 
         @report="hreport" 
         ref="refMoreAction">
         </more-action>
       </van-popup>
+
+
       <!-- 频道管理开关 -->
       <div class="bar-btn" @click="channeledit=true"> 
         <van-icon name="wap-nav" size="24" />
       </div>
+
+
        <!-- 点击频道控制按钮，弹出层 -->
       <van-action-sheet v-model="channeledit" title="编辑频道">
         <channel-edit :channeledit="channels"
         :activeindex="activeindex"
-        @updateCurrentChannel='updateCurrentchannel'
+        @updateCurrentChannel="updateCurrentchannel"
+        @updateCurrentindex="updateCurrentindex"
         @close="hcloseEdit"
         ></channel-edit>
       </van-action-sheet>
@@ -46,9 +51,9 @@ export default {
   },
   data() {
     return {
-      channels: [], // 订阅的文章列表
-      showmoreaction: false, // 是否显示弹出层
-      articleID: null, 
+      channels: [], // 订阅的频道
+      showmoreaction: false, // 是否显示x弹出层
+      articleID: null,  // 文章列表组件传来的要删除文章编号
       channeledit: false, //是否展开频道编辑弹层
       activeindex: 0 // 频道下标
     }
@@ -58,22 +63,22 @@ export default {
   },
   methods: {
     // 收到more组件中传来的dislike的指令,用eventbus事件发布和监听
-    async dislike() {
+    async hDislike() {
       const res = await dislike(this.articleID)
       // 关闭弹出层
       this.showmoreaction = false
       // 到article组件中删除相应没兴趣的文章
       this.delart()
     },
-    // 处理子组件article中的点击x的操作
+    // 处理文章列表组件article中的点击x的操作
     showfn(article_id) {
       // 显示弹出层
       this.showmoreaction = true;
-      //更改子组件isreport 为false
+      //更改more子组件isreport 为false
       if(this.$refs.refMoreAction) {
         this.$refs.refMoreAction.isReport = false
       }
-      // 保存子组建传来的文章ID
+      // 保存文章列表组建传来的点击关闭文章的ID
       this.articleID = article_id
     },
     // 获取频道，发axios请求，封装一个方法，专业一些
@@ -83,8 +88,9 @@ export default {
      },
      // 举报 
     async hreport(typeId) {
+      // typeid 就是从more组件中抛出来的举报类型
       // 调接口
-      const res = await reportart(this,articleID,typeId)
+      const res = await reportart(this.articleID,typeId)
       // 退出弹出框
       this.showmoreaction = false
       // 删除文章
@@ -102,9 +108,12 @@ export default {
       this.channeledit = false
     },
     // 根据编辑弹层传来的频道，更新被选中的频道
-    updateCurrentchannel(channel) {
+    updateCurrentChannel(channel) {
       // 当前频道在频道列表中的下标
      this.activeindex = this.channels.findIndex(it => it.id === channel.id)
+    },
+    updateCurrentindex(index) {
+      this.activeindex = index
     }
   },
     
@@ -115,8 +124,8 @@ export default {
 <style scoped lang='less'>
 .bar-btn {
   position: fixed;
-  top: 5px;
-  left: 50px;
+  top: 52px;
+  right: 5px;
   display: flex;
   align-items: center;
   opacity: .8;

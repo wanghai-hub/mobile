@@ -31,3 +31,28 @@ export const reportart = (artId,type) => {
     }
   })
 }
+// 
+export const get_article = (id) => {
+  return request ({
+    method: 'get',
+    url: '/app/v1_0/articles/'+id,
+  })
+}
+// 点赞
+export function focus (id) {
+  return request({
+    method: 'post',
+    url: '/app/v1_0/article/likings',
+    data: {
+      target: id
+    }
+  })
+}
+// 取消点赞
+export function unfocus (id) {
+  return request({
+    method: 'delete',
+    url: '/app/v1_0/article/likings/'+id,
+  })
+}
+

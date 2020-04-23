@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       isReport: false,
-      reports
+      reports: reports
     }
   },
 }

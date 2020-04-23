@@ -64,7 +64,8 @@ export default {
          this.$toast.success('登陆成功')
          // todo修改 ,登陆成功将返回的token存在vuex
          this.$store.commit('changeuser',result.data.data)
-         this.$router.push('/')
+         let to = this.$route.query.from || '/'
+         this.$router.push(to)
       }catch(e) {
         const errmsg = e.response.data.message
         if(errmsg.mobile) {

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --report",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -13,6 +13,7 @@
     "core-js": "^3.6.4",
     "dayjs": "^1.8.24",
     "json-bigint": "^0.3.0",
+    "socket.io-client": "^2.3.0",
     "vant": "^2.6.0",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
